@@ -110,7 +110,9 @@ class App {
       id: user.idJugador
     }
 
-    Rest.post('estado', [], user2, true).then(estado => console.log(estado)).catch(error => console.log(error))
+    Rest.post('estado', [], user2, false)
+      .then(estados => console.log(estados))
+      .catch(error => console.log(error))
   }
 }
 

@@ -26,6 +26,7 @@ export class Vista1 extends Vista {
   getUser() {
     // obtengo lo que tengo guardado en el local storage
     var user = JSON.parse(sessionStorage.getItem('usuario'))
+    console.log(user);
     this.controlador.getUser(user)
   }
 

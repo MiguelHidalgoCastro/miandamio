@@ -3,7 +3,7 @@
 require_once('./daos/daoestado.php');
 require_once('./modelos/estado.php');
 
-class Estado
+class EstadoController
 {
     function post($pathParams, $queryParams, $user)
     {

@@ -78,7 +78,7 @@ try {
 			break;
 		case 'estado':
 			require_once('./controladores/estado.php');
-			$controlador = new Estado();
+			$controlador = new EstadoController();
 			break;
 		default:
 			header('HTTP/1.1 501 Not Implemented');

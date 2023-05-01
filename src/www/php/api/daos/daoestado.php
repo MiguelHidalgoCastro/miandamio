@@ -11,9 +11,6 @@ class DAOEstado
     {
         $sql = "SELECT * FROM syc_estados WHERE idJugador = :id";
         $params = array('id' => $user->id);
-        $resultado = [];
-        $resultado = BD::seleccionar($sql, $params);
-
-        return $resultado;
+        return BD::seleccionar($sql, $params);
     }
 }
