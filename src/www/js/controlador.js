@@ -110,7 +110,7 @@ class App {
       id: user.idJugador
     }
 
-    Rest.post('estado', [], user2, false)
+    Rest.post('estado', [], user2, true)
       .then(estados => console.log(estados))
       .catch(error => console.log(error))
   }
