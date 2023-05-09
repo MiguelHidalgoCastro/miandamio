@@ -15,11 +15,40 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 
--- Volcando estructura de base de datos para user2daw_BD1-06
-CREATE DATABASE IF NOT EXISTS `user2daw_BD2-06` /*!40100 DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish_ci */;
+-- Volcando estructura de base de datos para user2daw_BD2-06
+DROP DATABASE IF EXISTS `user2daw_BD2-06`;
+CREATE DATABASE IF NOT EXISTS `user2daw_BD2-06` /*!40100 DEFAULT CHARACTER SET latin1 */;
 USE `user2daw_BD2-06`;
 
--- Volcando estructura para tabla user2daw_BD1-06.syc_compras
+-- Volcando estructura para tabla user2daw_BD2-06.syc_ciudades
+DROP TABLE IF EXISTS `syc_ciudades`;
+CREATE TABLE IF NOT EXISTS `syc_ciudades` (
+  `idCiudad` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombreCiudad` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `idEstructuraPartida` int(10) unsigned NOT NULL,
+  `fechaInicioPartida` datetime NOT NULL,
+  `publicado` char(3) COLLATE utf8_spanish_ci NOT NULL,
+  `finalizado` char(3) COLLATE utf8_spanish_ci NOT NULL,
+  `dineroInicial` decimal(7,2) NOT NULL,
+  `reputacionInicial` int(11) NOT NULL,
+  `cantidadCochesInicial` int(11) NOT NULL,
+  `puntuacionVenta` int(11) NOT NULL,
+  `puntuacionCompra` int(11) NOT NULL,
+  PRIMARY KEY (`idCiudad`) USING BTREE,
+  KEY `FK_syc_partidas_activas_syc_config_partidas` (`idEstructuraPartida`) USING BTREE,
+  CONSTRAINT `FK_syc_partidas_activas_syc_config_partidas` FOREIGN KEY (`idEstructuraPartida`) REFERENCES `syc_estructura_partidas` (`idEstructuraPartida`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- Volcando datos para la tabla user2daw_BD2-06.syc_ciudades: ~6 rows (aproximadamente)
+INSERT INTO `syc_ciudades` (`idCiudad`, `nombreCiudad`, `idEstructuraPartida`, `fechaInicioPartida`, `publicado`, `finalizado`, `dineroInicial`, `reputacionInicial`, `cantidadCochesInicial`, `puntuacionVenta`, `puntuacionCompra`) VALUES
+	(1, 'CIUDAD 1', 1, '2023-04-01 12:00:00', 'SI', 'NO', 30000.00, 70, 5, 200, 100),
+	(2, 'CIUDAD 2', 1, '2023-04-13 10:00:00', 'SI', 'NO', 30000.00, 70, 5, 200, 100),
+	(3, 'CIUDAD 3', 2, '2023-04-04 23:27:27', 'SI', 'NO', 30000.00, 70, 5, 200, 100),
+	(4, 'CIUDAD 4', 2, '2023-04-03 23:27:27', 'SI', 'NO', 30000.00, 70, 5, 200, 100),
+	(5, 'CIUDAD 5', 3, '2023-04-03 23:27:27', 'SI', 'NO', 30000.00, 70, 5, 200, 100),
+	(6, 'CIUDAD 6', 3, '2023-04-08 23:27:27', 'SI', 'NO', 30000.00, 70, 5, 200, 100);
+
+-- Volcando estructura para tabla user2daw_BD2-06.syc_compras
 DROP TABLE IF EXISTS `syc_compras`;
 CREATE TABLE IF NOT EXISTS `syc_compras` (
   `idVenta` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -33,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `syc_compras` (
   CONSTRAINT `FK_syc_compras_syc_jugadores` FOREIGN KEY (`idJugador`) REFERENCES `syc_jugadores` (`idJugador`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla user2daw_BD1-06.syc_compras: ~8 rows (aproximadamente)
+-- Volcando datos para la tabla user2daw_BD2-06.syc_compras: ~8 rows (aproximadamente)
 INSERT INTO `syc_compras` (`idVenta`, `idGanvam`, `idJugador`, `precio`) VALUES
 	(1, 3, 4, 15000.00),
 	(2, 2, 4, 5000.00),
@@ -44,7 +73,7 @@ INSERT INTO `syc_compras` (`idVenta`, `idGanvam`, `idJugador`, `precio`) VALUES
 	(7, 5, 3, 9000.00),
 	(8, 6, 3, 7000.00);
 
--- Volcando estructura para tabla user2daw_BD1-06.syc_concesionarios
+-- Volcando estructura para tabla user2daw_BD2-06.syc_concesionarios
 DROP TABLE IF EXISTS `syc_concesionarios`;
 CREATE TABLE IF NOT EXISTS `syc_concesionarios` (
   `idConcesionario` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -55,7 +84,7 @@ CREATE TABLE IF NOT EXISTS `syc_concesionarios` (
   PRIMARY KEY (`idConcesionario`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla user2daw_BD1-06.syc_concesionarios: ~7 rows (aproximadamente)
+-- Volcando datos para la tabla user2daw_BD2-06.syc_concesionarios: ~7 rows (aproximadamente)
 INSERT INTO `syc_concesionarios` (`idConcesionario`, `nombre`, `plazas`, `cantOperaciones`, `precio`) VALUES
 	(1, 'Concesionario 1', 10, 3, 50000.00),
 	(2, 'Concesionario 2', 15, 5, 70000.00),
@@ -65,27 +94,7 @@ INSERT INTO `syc_concesionarios` (`idConcesionario`, `nombre`, `plazas`, `cantOp
 	(6, 'Concesionario 6', 35, 12, 180000.00),
 	(7, 'Concesionario 7', 40, 14, 200000.00);
 
--- Volcando estructura para tabla user2daw_BD1-06.syc_config_partidas
-DROP TABLE IF EXISTS `syc_config_partidas`;
-CREATE TABLE IF NOT EXISTS `syc_config_partidas` (
-  `idConfigPartida` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nombrePartida` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `duracionPartida` int(11) NOT NULL,
-  `numIniciarDias` tinyint(3) unsigned NOT NULL,
-  `numJugadores` int(10) unsigned NOT NULL,
-  `premioUno` int(10) unsigned NOT NULL,
-  `premioDos` int(10) unsigned NOT NULL,
-  `premioTres` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`idConfigPartida`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
--- Volcando datos para la tabla user2daw_BD1-06.syc_config_partidas: ~3 rows (aproximadamente)
-INSERT INTO `syc_config_partidas` (`idConfigPartida`, `nombrePartida`, `duracionPartida`, `numIniciarDias`, `numJugadores`, `premioUno`, `premioDos`, `premioTres`) VALUES
-	(1, 'Modalidad Uno', 100, 10, 200, 1000, 500, 200),
-	(2, 'Modalidad Dos', 200, 10, 150, 1000, 500, 200),
-	(3, 'Modalidad Tres', 50, 10, 300, 1000, 500, 200);
-
--- Volcando estructura para tabla user2daw_BD1-06.syc_estados
+-- Volcando estructura para tabla user2daw_BD2-06.syc_estados
 DROP TABLE IF EXISTS `syc_estados`;
 CREATE TABLE IF NOT EXISTS `syc_estados` (
   `idEstado` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -101,15 +110,37 @@ CREATE TABLE IF NOT EXISTS `syc_estados` (
   KEY `FK_syc_estados_syc_concesionarios` (`idConcesionario`),
   CONSTRAINT `FK_syc_estados_syc_concesionarios` FOREIGN KEY (`idConcesionario`) REFERENCES `syc_concesionarios` (`idConcesionario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_syc_estados_syc_jugadores` FOREIGN KEY (`idJugador`) REFERENCES `syc_jugadores` (`idJugador`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_syc_estados_syc_partidas` FOREIGN KEY (`idPartida`) REFERENCES `syc_partidas` (`idPartida`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  CONSTRAINT `FK_syc_estados_syc_partidas` FOREIGN KEY (`idPartida`) REFERENCES `syc_ciudades` (`idCiudad`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla user2daw_BD1-06.syc_estados: ~2 rows (aproximadamente)
+-- Volcando datos para la tabla user2daw_BD2-06.syc_estados: ~4 rows (aproximadamente)
 INSERT INTO `syc_estados` (`idEstado`, `idJugador`, `idPartida`, `idConcesionario`, `dinero`, `reputacion`, `puntuacion`) VALUES
 	(1, 3, 1, 1, 50000, 70, 0),
-	(2, 4, 1, 1, 50000, 70, 0);
+	(2, 4, 1, 1, 50000, 70, 0),
+	(3, 3, 2, 1, 30000, 70, 0),
+	(4, 3, 3, 1, 30000, 70, 0);
 
--- Volcando estructura para tabla user2daw_BD1-06.syc_ganvam
+-- Volcando estructura para tabla user2daw_BD2-06.syc_estructura_partidas
+DROP TABLE IF EXISTS `syc_estructura_partidas`;
+CREATE TABLE IF NOT EXISTS `syc_estructura_partidas` (
+  `idEstructuraPartida` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `nombrePartida` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
+  `duracionPartida` int(11) NOT NULL,
+  `numIniciarDias` tinyint(3) unsigned NOT NULL,
+  `numJugadores` int(10) unsigned NOT NULL,
+  `premioUno` int(10) unsigned NOT NULL,
+  `premioDos` int(10) unsigned NOT NULL,
+  `premioTres` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`idEstructuraPartida`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- Volcando datos para la tabla user2daw_BD2-06.syc_estructura_partidas: ~3 rows (aproximadamente)
+INSERT INTO `syc_estructura_partidas` (`idEstructuraPartida`, `nombrePartida`, `duracionPartida`, `numIniciarDias`, `numJugadores`, `premioUno`, `premioDos`, `premioTres`) VALUES
+	(1, 'Modalidad Uno', 100, 10, 200, 1000, 500, 200),
+	(2, 'Modalidad Dos', 200, 10, 150, 1000, 500, 200),
+	(3, 'Modalidad Tres', 50, 10, 300, 1000, 500, 200);
+
+-- Volcando estructura para tabla user2daw_BD2-06.syc_ganvam
 DROP TABLE IF EXISTS `syc_ganvam`;
 CREATE TABLE IF NOT EXISTS `syc_ganvam` (
   `idGanvam` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -120,7 +151,7 @@ CREATE TABLE IF NOT EXISTS `syc_ganvam` (
   PRIMARY KEY (`idGanvam`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla user2daw_BD1-06.syc_ganvam: ~16 rows (aproximadamente)
+-- Volcando datos para la tabla user2daw_BD2-06.syc_ganvam: ~16 rows (aproximadamente)
 INSERT INTO `syc_ganvam` (`idGanvam`, `marca`, `modelo`, `fechaFabricacion`, `precio`) VALUES
 	(1, 'Audi', 'A1', '2017-04-03', 17500.00),
 	(2, 'Audi', 'A3', '2005-05-08', 5000.00),
@@ -139,7 +170,7 @@ INSERT INTO `syc_ganvam` (`idGanvam`, `marca`, `modelo`, `fechaFabricacion`, `pr
 	(15, 'Citroen', 'C3', '2007-06-06', 3900.00),
 	(16, 'Citroen', 'C5', '2001-04-19', 2500.00);
 
--- Volcando estructura para tabla user2daw_BD1-06.syc_jugadores
+-- Volcando estructura para tabla user2daw_BD2-06.syc_jugadores
 DROP TABLE IF EXISTS `syc_jugadores`;
 CREATE TABLE IF NOT EXISTS `syc_jugadores` (
   `idJugador` int(10) unsigned NOT NULL AUTO_INCREMENT,
@@ -154,14 +185,14 @@ CREATE TABLE IF NOT EXISTS `syc_jugadores` (
   UNIQUE KEY `mail` (`correo`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla user2daw_BD1-06.syc_jugadores: ~4 rows (aproximadamente)
+-- Volcando datos para la tabla user2daw_BD2-06.syc_jugadores: ~4 rows (aproximadamente)
 INSERT INTO `syc_jugadores` (`idJugador`, `nick`, `correo`, `pass`, `rol`, `fechaCreacion`, `gemas`) VALUES
 	(1, 'admin', 'adminsyc@gmail.com', '1234', 'ADM', '2023-04-03 13:00:00', 0),
 	(2, 'helper1', 'helpersyc@gmail.com', '1234', 'HLP', '2023-04-03 13:01:00', 0),
 	(3, 'miguel', 'lyto199120@gmail.com', '1234', 'PLY', '2023-04-03 13:05:00', 0),
 	(4, 'mario', 'mperezg30@gmail.com', '1234', 'PLY', '2023-04-03 13:06:00', 0);
 
--- Volcando estructura para tabla user2daw_BD1-06.syc_ofertas
+-- Volcando estructura para tabla user2daw_BD2-06.syc_ofertas
 DROP TABLE IF EXISTS `syc_ofertas`;
 CREATE TABLE IF NOT EXISTS `syc_ofertas` (
   `idOferta` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -172,7 +203,7 @@ CREATE TABLE IF NOT EXISTS `syc_ofertas` (
   CONSTRAINT `FK_syc_ofertas_syc_vehiculos` FOREIGN KEY (`idVehiculo`) REFERENCES `syc_vehiculos` (`idVehiculo`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla user2daw_BD1-06.syc_ofertas: ~10 rows (aproximadamente)
+-- Volcando datos para la tabla user2daw_BD2-06.syc_ofertas: ~9 rows (aproximadamente)
 INSERT INTO `syc_ofertas` (`idOferta`, `idVehiculo`, `precio`) VALUES
 	(1, 1, 15000.00),
 	(2, 2, 18000.00),
@@ -184,31 +215,7 @@ INSERT INTO `syc_ofertas` (`idOferta`, `idVehiculo`, `precio`) VALUES
 	(9, 8, 7000.00),
 	(10, 9, 7500.00);
 
--- Volcando estructura para tabla user2daw_BD1-06.syc_partidas
-DROP TABLE IF EXISTS `syc_partidas`;
-CREATE TABLE IF NOT EXISTS `syc_partidas` (
-  `idPartida` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `nombrePartida` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
-  `idConfigPartida` int(10) unsigned NOT NULL,
-  `fechaInicioPartida` datetime NOT NULL,
-  `publicado` char(3) COLLATE utf8_spanish_ci NOT NULL,
-  `finalizado` char(3) COLLATE utf8_spanish_ci NOT NULL,
-  `dineroInicial` decimal(7,2) DEFAULT NULL,
-  `reputacionInicial` int(11) DEFAULT NULL,
-  `cantidadCochesInicial` int(11) DEFAULT NULL,
-  `puntuacionVenta` int(11) DEFAULT NULL,
-  `puntuacionCompra` int(11) DEFAULT NULL,
-  PRIMARY KEY (`idPartida`) USING BTREE,
-  KEY `FK_syc_partidas_activas_syc_config_partidas` (`idConfigPartida`),
-  CONSTRAINT `FK_syc_partidas_activas_syc_config_partidas` FOREIGN KEY (`idConfigPartida`) REFERENCES `syc_config_partidas` (`idConfigPartida`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
-
--- Volcando datos para la tabla user2daw_BD1-06.syc_partidas: ~2 rows (aproximadamente)
-INSERT INTO `syc_partidas` (`idPartida`, `nombrePartida`, `idConfigPartida`, `fechaInicioPartida`, `publicado`, `finalizado`, `dineroInicial`, `reputacionInicial`, `cantidadCochesInicial`, `puntuacionVenta`, `puntuacionCompra`) VALUES
-	(1, 'CIUDAD 1', 1, '2023-04-01 12:00:00', 'SI', 'NO', NULL, NULL, NULL, NULL, NULL),
-	(2, 'CIUDAD 2', 1, '2023-05-13 10:00:00', 'NO', 'NO', NULL, NULL, NULL, NULL, NULL);
-
--- Volcando estructura para tabla user2daw_BD1-06.syc_vehiculos
+-- Volcando estructura para tabla user2daw_BD2-06.syc_vehiculos
 DROP TABLE IF EXISTS `syc_vehiculos`;
 CREATE TABLE IF NOT EXISTS `syc_vehiculos` (
   `idVehiculo` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -222,10 +229,10 @@ CREATE TABLE IF NOT EXISTS `syc_vehiculos` (
   KEY `FK_syc_vehiculos_syc_partidas` (`idPartida`),
   CONSTRAINT `FK_syc_vehiculos_syc_ganvam` FOREIGN KEY (`idGanvam`) REFERENCES `syc_ganvam` (`idGanvam`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `FK_syc_vehiculos_syc_jugadores` FOREIGN KEY (`idJugador`) REFERENCES `syc_jugadores` (`idJugador`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `FK_syc_vehiculos_syc_partidas` FOREIGN KEY (`idPartida`) REFERENCES `syc_partidas` (`idPartida`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `FK_syc_vehiculos_syc_partidas` FOREIGN KEY (`idPartida`) REFERENCES `syc_ciudades` (`idCiudad`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
--- Volcando datos para la tabla user2daw_BD1-06.syc_vehiculos: ~10 rows (aproximadamente)
+-- Volcando datos para la tabla user2daw_BD2-06.syc_vehiculos: ~10 rows (aproximadamente)
 INSERT INTO `syc_vehiculos` (`idVehiculo`, `idGanvam`, `idJugador`, `idPartida`, `precio`) VALUES
 	(1, 9, 3, 1, 15000.00),
 	(2, 9, 4, 1, 14500.00),

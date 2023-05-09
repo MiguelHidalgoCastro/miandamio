@@ -18,7 +18,7 @@ export class Vista1 extends Vista {
     this.btnUser = document.getElementById('usuario')
     this.btnLogOut = document.getElementById('logOut')
     // Asociamos eventos
-    this.btnUser.onclick = this.getUser.bind(this)
+    //this.btnUser.onclick = this.getUser.bind(this)
     this.btnLogOut.onclick = this.logout.bind(this)
 
   }
@@ -26,11 +26,43 @@ export class Vista1 extends Vista {
   getUser() {
     // obtengo lo que tengo guardado en el local storage
     var user = JSON.parse(sessionStorage.getItem('usuario'))
-    console.log(user);
+    //lo que tengo en el session storage
+    // console.log(user);
     this.controlador.getUser(user)
   }
 
   logout() {
     this.controlador.logout()
+  }
+
+  mostrarPartidasEmpezadas(array) {
+    let div = document.getElementById('partidasEmpezadas')
+
+    array.forEach(element => {
+      let p = document.createElement('p')
+      //Object { idEstado: 1, idJugador: 3, idPartida: 1, idConcesionario: 1, dinero: 50000, reputacion: 70, puntuacion: 0 }
+      p.textContent = 'idEstado:' + element.idEstado + ' idJugador:' + element.idJugador + ' idPartida:' + element.idPartida + ' idConcesionario:' + element.idConcesionario + ' dinero:' + element.dinero + ' reputacion:' + element.reputacion + ' puntuacion:' + element.puntuacion
+      div.appendChild(p)
+    });
+  }
+
+  mostrarPartidasDisponibles(array) {
+    let div = document.getElementById('partidasDisponibles')
+
+    array.forEach(element => {
+      let p = document.createElement('p')
+      p.textContent =
+        'idCiudad:' + element.idCiudad +
+        ' nombreCiudad:' + element.nombreCiudad +
+        ' idEstructuraPartida:' + element.idEstructuraPartida +
+        ' fechaInicioPartida:' + element.fechaInicioPartida +
+        ' publicado:' + element.publicado +
+        ' dineroInicial:' + element.dineroInicial +
+        ' reputacionInicial:' + element.reputacionInicial +
+        ' cantidadCochesInicial:' + element.cantidadCochesInicial +
+        ' puntuacionVenta:' + element.puntuacionVenta +
+        ' puntuacionCompra:' + element.puntuacionCompra
+      div.appendChild(p)
+    });
   }
 }

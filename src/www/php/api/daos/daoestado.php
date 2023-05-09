@@ -1,8 +1,5 @@
 <?php
-
-
 require_once('./modelos/estado.php');
-
 
 class DAOEstado
 {
@@ -13,4 +10,11 @@ class DAOEstado
         $params = array('id' => $user->id);
         return BD::seleccionar($sql, $params);
     }
+
+    public static function getAllCities(){
+        $sql = "SELECT * FROM syc_ciudades WHERE publicado = 'SI'";
+        $params = [];
+        return BD::seleccionar($sql, $params);
+    }
+
 }

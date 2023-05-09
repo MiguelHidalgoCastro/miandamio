@@ -41,8 +41,9 @@ class Login {
     Rest.post('login', [], login, true)
       //Recibimos del servidor el token de autenticación (o un error si falla la autenticación)
       .then(usuario => {
+        console.log(usuario);
         //Guardamos el token en SessionStorage
-        sessionStorage.setItem('usuario', JSON.stringify(usuario))
+        sessionStorage.setItem('usuario', JSON.stringify(usuario)) 
         //Vamos a la página principal
         window.location.href = 'index.html'
       })

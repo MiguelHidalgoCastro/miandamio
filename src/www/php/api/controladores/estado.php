@@ -9,13 +9,16 @@ class EstadoController
     {
         global $config;
         $estado = DAOEstado::getEstados($user);
-        sleep(1);
+        // sleep(1);
         if (!$estado) {
             header('HTTP/1.1 404 Not Found');
             die();
         }
+        //encapsulo los datos
+        $jsonestado = json_encode($estado);
         header('Content-type: application/json; charset=utf-8');
         header('HTTP/1.1 200 OK');
+        echo $jsonestado;
         die();
     }
 }

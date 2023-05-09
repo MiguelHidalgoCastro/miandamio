@@ -80,6 +80,10 @@ try {
 			require_once('./controladores/estado.php');
 			$controlador = new EstadoController();
 			break;
+		case 'ciudad':
+			require_once('./controladores/ciudad.php');
+			$controlador = new CiudadController();
+			break;
 		default:
 			header('HTTP/1.1 501 Not Implemented');
 			die();
@@ -89,9 +93,9 @@ try {
 			case 'POST':
 				$controlador->post($pathParams, $queryParams, $body, $usuario);
 				die();
-				// case 'GET':
-				// 	$controlador->get($pathParams, $queryParams, $usuario);
-				// 	die();
+			case 'GET':
+				$controlador->get($pathParams, $queryParams, $usuario);
+				die();
 				// case 'DELETE':
 				// 	$controlador->delete($pathParams, $queryParams, $usuario);
 				// 	die();

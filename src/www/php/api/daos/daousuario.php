@@ -20,7 +20,7 @@ class DAOUsuario
 	{
 		$usuario = new Usuario();
 
-		$sql = "SELECT * FROM syc_jugadores WHERE nick = :nick AND pass = :pass";
+		$sql = "SELECT idJugador FROM syc_jugadores WHERE nick = :nick AND pass = :pass";
 
 		$params = array('nick' => $login->usuario, 'pass' => $login->clave);
 		$resultado = [];
@@ -54,12 +54,12 @@ class DAOUsuario
 		if (count($resultSet) == 1) {
 			//Asignamos los datos del usuario a $usuario
 			$usuario->idJugador = $resultSet[0]['idJugador'];
-			$usuario->correo = $resultSet[0]['correo'];
-			$usuario->nick = $resultSet[0]['nick'];
-			$usuario->pass = $resultSet[0]['pass'];
-			$usuario->rol = $resultSet[0]['rol'];
-			$usuario->fechaCreacion = $resultSet[0]['fechaCreacion'];
-			$usuario->gemas = $resultSet[0]['gemas'];
+			// $usuario->correo = $resultSet[0]['correo'];
+			// $usuario->nick = $resultSet[0]['nick'];
+			// $usuario->pass = $resultSet[0]['pass'];
+			// $usuario->rol = $resultSet[0]['rol'];
+			// $usuario->fechaCreacion = $resultSet[0]['fechaCreacion'];
+			// $usuario->gemas = $resultSet[0]['gemas'];
 
 		} else return false;
 		return $usuario;

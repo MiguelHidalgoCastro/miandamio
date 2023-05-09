@@ -34,12 +34,21 @@ class App {
     // console.log(this.#usuario)
     if (!this.#usuario)
       window.location.href = 'login.html' //Falta informar al usuario del error.
+    Rest.setAutorizacion(this.#usuario.autorizacion)
     this.modelo = new Modelo()
     this.vistaMenu = new VistaMenu(this, document.getElementById('divMenu'))
     this.vista1 = new Vista1(this, document.getElementById('divVista1'))
     this.vista2 = new Vista2(this, document.getElementById('divVista2'))
 
+
+    //traer datos
+
+    //pasar los datos a la vista de ciudades
     this.verVista1()
+    //this.getPartidas()
+    // this.getCiudades()
+    this.getUser()
+    this.getPartidas()
   }
 
   /**
@@ -104,17 +113,47 @@ class App {
   }
 
 
-  getUser(user) {
-    console.log(user);
+  getUser() {
+    let u = JSON.parse(this.#usuario)
     const user2 = {
-      id: user.idJugador
+      id: u.idJugador
     }
 
     Rest.post('estado', [], user2, true)
-      .then(estados => console.log(estados))
+      .then(
+        estados => {
+          // console.log(estados)
+          this.vista1.mostrarPartidasEmpezadas(estados)
+        }
+      )
       .catch(error => console.log(error))
   }
+
+  getPartidas() {
+    Rest.get('ciudad')
+      .then(
+        partidas => {
+          this.vista1.mostrarPartidasDisponibles(partidas)
+        }
+      )
+      .catch(error => console.log(error))
+  }
+
+
+
+
+
+
+
+
+
+
+  getCiudades() {
+    // console.log(user);
+
+  }
 }
+
 
 /* eslint-disable no-new */
 new App()
