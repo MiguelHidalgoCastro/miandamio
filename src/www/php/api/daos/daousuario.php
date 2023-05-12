@@ -28,6 +28,28 @@ class DAOUsuario
 
 		return DaoUsuario::crearUsuario($resultado);
 	}
+
+
+
+
+	public static function autenticarLogin_new($login)
+	{
+
+		$sql = "SELECT idJugador, pass FROM syc_jugadores WHERE nick = :nick";
+		$params = array('nick' => $login->usuario);
+		$consulta = BD::mySelect($sql, $params);
+		$user = new Usuario();
+
+		if ($consulta->rowCount()) {
+			$u = $consulta->fetch(PDO::FETCH_OBJ);
+			if (password_verify($login->clave, $u->pass)) {
+				$user->idJugador = $u->idJugador;
+				return $user;
+			}
+		} else return false;
+	}
+
+
 	/**
 		Consulta la base de datos para autenticar al usuario y devolver sus datos.
 		El email ha sido autenticado por Google.
@@ -54,12 +76,6 @@ class DAOUsuario
 		if (count($resultSet) == 1) {
 			//Asignamos los datos del usuario a $usuario
 			$usuario->idJugador = $resultSet[0]['idJugador'];
-			// $usuario->correo = $resultSet[0]['correo'];
-			// $usuario->nick = $resultSet[0]['nick'];
-			// $usuario->pass = $resultSet[0]['pass'];
-			// $usuario->rol = $resultSet[0]['rol'];
-			// $usuario->fechaCreacion = $resultSet[0]['fechaCreacion'];
-			// $usuario->gemas = $resultSet[0]['gemas'];
 
 		} else return false;
 		return $usuario;

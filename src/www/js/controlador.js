@@ -7,8 +7,8 @@ import { Modelo } from './modelos/modelo.js'
 
 // Cargamos las Vistas
 import { VistaMenu } from './vistas/vistamenu.js'
-import { Vista1 } from './vistas/vista1.js'
-import { Vista2 } from './vistas/vista2.js'
+import { VistaSeleccion } from './vistas/vistaseleccion.js'
+import { VistaDashboard } from './vistas/vistadashboard.js'
 
 // Cargamos los Servicios
 import { Rest } from './servicios/rest.js'
@@ -37,16 +37,16 @@ class App {
     Rest.setAutorizacion(this.#usuario.autorizacion)
     this.modelo = new Modelo()
     this.vistaMenu = new VistaMenu(this, document.getElementById('divMenu'))
-    this.vista1 = new Vista1(this, document.getElementById('divVista1'))
-    this.vista2 = new Vista2(this, document.getElementById('divVista2'))
+    this.vistaSeleccion = new VistaSeleccion(this, document.getElementById('divVistaSeleccion'))
+    this.vistaDashboard = new VistaDashboard(this, document.getElementById('divVistaDashboard'))
 
 
-    //traer datos
+
 
     //pasar los datos a la vista de ciudades
-    this.verVista1()
-    //this.getPartidas()
-    // this.getCiudades()
+    this.verVistaSeleccion()
+
+    //traer datos
     this.getUser()
     this.getPartidas()
   }
@@ -94,22 +94,22 @@ class App {
     window.location.href = 'login.html'
   }
 
-  verVista1() {
-    this.vistaMenu.verVista1()
+  verVistaSeleccion() {
+    this.vistaMenu.verVistaSeleccion()
     this.ocultarVistas()
-    this.vista1.mostrar()
+    this.vistaSeleccion.mostrar()
   }
-  verVista2() {
-    this.vistaMenu.verVista2()
+  verVistaDashboard() {
+    this.vistaMenu.verVistaDashboard()
     this.ocultarVistas()
-    this.vista2.mostrar()
+    this.vistaDashboard.mostrar()
   }
   /**
     Oculta todas las vistas.
   **/
   ocultarVistas() {
-    this.vista1.mostrar(false)
-    this.vista2.mostrar(false)
+    this.vistaSeleccion.mostrar(false)
+    this.vistaDashboard.mostrar(false)
   }
 
 
@@ -123,7 +123,9 @@ class App {
       .then(
         estados => {
           // console.log(estados)
-          this.vista1.mostrarPartidasEmpezadas(estados)
+
+          //tengo que traerme las ciudades
+          this.vistaSeleccion.mostrarPartidasEmpezadas(estados)
         }
       )
       .catch(error => console.log(error))
@@ -133,19 +135,11 @@ class App {
     Rest.get('ciudad')
       .then(
         partidas => {
-          this.vista1.mostrarPartidasDisponibles(partidas)
+          this.vistaSeleccion.mostrarPartidasDisponibles(partidas)
         }
       )
       .catch(error => console.log(error))
   }
-
-
-
-
-
-
-
-
 
 
   getCiudades() {

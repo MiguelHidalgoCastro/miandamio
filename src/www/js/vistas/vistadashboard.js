@@ -4,7 +4,7 @@
 
 import { Vista } from './vista.js'
 
-export class Vista2 extends Vista{
+export class VistaDashboard extends Vista{
   /**
     Constructor de la clase.
     @param {Object} controlador Controlador de la vista.

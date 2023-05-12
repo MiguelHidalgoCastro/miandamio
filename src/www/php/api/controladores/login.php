@@ -21,7 +21,7 @@ class Login{
 	**/
 	function post($pathParams, $queryParams, $login){
 		global $config;
-		$usuario = DAOUsuario::autenticarLogin($login);
+		$usuario = DAOUsuario::autenticarLogin_new($login);
 		sleep(1);
 		if (!$usuario){
       		header('HTTP/1.1 401 Unauthorized');

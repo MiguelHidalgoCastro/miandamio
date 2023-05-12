@@ -20,35 +20,35 @@ export class VistaMenu extends Vista {
   }
 
   /**
-    Muestra la vista 1.
+    Muestra la vista seleccion.
   **/
-  verVista1 () {
+  verVistaSeleccion () {
     this.limpiar()
     const h1 = document.createElement('h1')
     this.base.appendChild(h1)
-    h1.appendChild(document.createTextNode('Estás en Vista 1'))
+    h1.appendChild(document.createTextNode('Vista Selección'))
     //this.crearEnlaceAVista2()
-    this.base.appendChild(this.crearEnlaceAVista2())
+    this.base.appendChild(this.crearEnlaceAVistaDashboard())
   }
 
   /**
     Muestra la vista 2.
   **/
-  verVista2 () {
+  verVistaDashboard () {
     this.limpiar()
     const h1 = document.createElement('h1')
     this.base.appendChild(h1)
-    h1.appendChild(document.createTextNode('Estás en Vista 2'))
-    this.base.appendChild(this.crearEnlaceAVista1())
+    h1.appendChild(document.createTextNode('Vista Dashboard'))
+    this.base.appendChild(this.crearEnlaceAVistaSeleccion())
   }
   
   /**
    * 
    */
-  crearEnlaceAVista1(){
+  crearEnlaceAVistaSeleccion(){
     const a = document.createElement('a')
-    a.appendChild(document.createTextNode('Ver Vista1'))
-    a.onclick = this.controlador.verVista1.bind(this.controlador)
+    a.appendChild(document.createTextNode('Ver Vista Seleccion'))
+    a.onclick = this.controlador.verVistaSeleccion.bind(this.controlador)
     return a
   }
 
@@ -56,10 +56,10 @@ export class VistaMenu extends Vista {
    * 
    * 
    */
-  crearEnlaceAVista2(){
+  crearEnlaceAVistaDashboard(){
     const a = document.createElement('a')
-    a.appendChild(document.createTextNode('Ver Vista2'))
-    a.onclick = this.controlador.verVista2.bind(this.controlador)
+    a.appendChild(document.createTextNode('Ver Vista Dashboard'))
+    a.onclick = this.controlador.verVistaDashboard.bind(this.controlador)
     return a
   }
 
